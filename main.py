@@ -19,7 +19,7 @@ for file_name in files:
         continue
 
     query = f"{str(audio_mt['title'])} {str(audio_mt['artist']).replace(',', ' ')}"
-    dotenv_path = './.env'
+    dotenv_path = '.env'
 
     load_dotenv(dotenv_path)
     SpClient = os.getenv('SP_CLIENT_ID')
