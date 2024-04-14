@@ -3,6 +3,7 @@ import urllib
 import music_tag
 import spotipy
 from spotipy import SpotifyOAuth
+from dotenv import load_dotenv
 
 path = "Diric"
 files = os.listdir(path)
@@ -18,10 +19,16 @@ for file_name in files:
         continue
 
     query = f"{str(audio_mt['title'])} {str(audio_mt['artist']).replace(',', ' ')}"
+    dotenv_path = './.env'
 
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=clientId,
-                                                     client_secret=clientSecret,
+    load_dotenv(dotenv_path)
+    SpClient = os.getenv('SP_CLIENT_ID')
+    SpSecret = os.getenv('SP_CLIENT_SECRET')
+
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SpClient,
+                                                     client_secret=SpSecret,
                                                      redirect_uri='http://localhost:7777/callback'))
+
     search_results = sp.search(query, type="track")
     track = search_results['tracks']['items'][0]
 
